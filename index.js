@@ -11,7 +11,7 @@ var port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 4000,
     ip   = process.env.IP   || process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1',
     mongoURL = process.env.OPENSHIFT_MONGODB_DB_URL || process.env.MONGO_URL,
     mongoURLLabel = "";
-
+console.log('suneel: env variables mongoURL',mongoURL);
 if (mongoURL == null && process.env.DATABASE_SERVICE_NAME) {
   var mongoServiceName = process.env.DATABASE_SERVICE_NAME.toUpperCase(),
       mongoHost = process.env[mongoServiceName + '_SERVICE_HOST'],
@@ -31,12 +31,13 @@ if (mongoURL == null && process.env.DATABASE_SERVICE_NAME) {
 
   }
 }
-
+console.log('suneel: just before calling...mongoURL, mongoURL);
+            
 var initDb = function(callback) {
   if (mongoURL == null) mongoURL = 'mongodb://localhost/vendormgt';
 
   //mongoose.connect('mongodb://localhost/ninjago');
-  mongoose.connect('mongodb://localhost/vendormgt');  //connect to mongo db using mongoose DB: ninjago
+  mongoose.connect(mongoURL);  //connect to mongo db using mongoose DB: ninjago
   mongoose.Promise = global.Promise;
 
   /*mongodb.connect(mongoURL, function(err, conn) {
