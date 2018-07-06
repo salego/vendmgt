@@ -9,9 +9,9 @@ reqServer = process.env.HTTP_TEST_SERVER || server
 
 describe('Basic routes tests', function() {
 
-    it('GET to / should return 200', function(done){
+    it('GET to /login should return 200', function(done){
         chai.request(reqServer)
-        .get('/')
+        .get('/login')
         .end(function(err, res) {
             res.should.have.status(200);
             done();
@@ -19,13 +19,4 @@ describe('Basic routes tests', function() {
 
     })
 
-    it('GET to /pagecount should return 200', function(done){
-        chai.request(reqServer)
-        .get('/pagecount')
-        .end(function(err, res) {
-            res.should.have.status(200);
-            done();
-        })
-
-    })
 })

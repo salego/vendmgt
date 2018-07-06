@@ -4,8 +4,8 @@
   "description": "Vendor Management System",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
-
+    "start": "node index.js",
+    "test": "IP=0.0.0.0 PORT=3030 mocha --timeout 5000 tests/*_test.js"
   },
   "author": "Suneel Peruru / Santosh Kumari Peruru",
   "license": "ISC",
