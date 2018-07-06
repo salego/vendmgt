@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <% include ./partials/head %>
+</head>
+
+<body class="container">
+<header>
+  <% include ./partials/header %>
+</header>
+
+<h2>Vendor Signup Form</h2>
+
+  <form class="modal-content" id="registerForm" method="post" action="/api/vendor-create">
+    <div class="container">
+
+      <hr>
+      <label for="name"><b>Name</b></label>
+      <input type="text" placeholder="Full Name" name="name" required>
+
+      <label for="company"><b>Company Name</b></label>
+      <input type="text" placeholder="Company Name" name="company" required>
+
+      <label for="address"><b>Company Address</b></label>
+      <input type="text" placeholder="Company Name" name="address" required>
+
+
+      <label for="phoneNo"><b>Phone Number</b></label>
+      <input type="number" placeholder="Phone Number" name="phoneNo" required>
+
+      <label for="photoIdType"><b>Photo ID Type:</b></label>
+      <select name = "photoIdType">
+        <% types.forEach (function(type){ %>
+          <option value = "<%= type.idType %>"><%= type.idType %></option>
+        <% }); %>
+      </select>
+
+
+      <label for="photoId"><b>Photo Id</b></label>
+      <input type="text" placeholder="Aadhar ID, driving license, etc" name="photoId" required>
+
+      <label for="email"><b>Email</b></label>
+      <input type="email" placeholder="Enter Email" name="email" required>
+
+      <div class="clearfix">
+        <button type="button" class="cancelbtn">Cancel</button>
+        <button type="submit" class="signupbtn">Sign Up</button>
+      </div>
+    </div>
+  </form>
+
+  <!-- Scripts -->
+  <% include ./partials/scripts %>
+
+  <footer>
+      <% include ./partials/footer %>
+  </footer>
+
+</body>
+</html>

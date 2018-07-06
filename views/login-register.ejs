@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <% include ./partials/head %>
+</head>
+
+<body class="container light-blue lighten-5">
+<header>
+ <% include ./partials/header %>   
+</header>
+
+<!-- Error messages from flash
+    uses script snippet also for closing this strip -->
+<% if (showErrors)  { %>
+  <div class="alert <%= alertType %>" role="alert">
+      <button type="button" class="close-alert">×</button>
+          <% errors.forEach (function(error){ %>
+              <p><%= error %></p>
+          <% }); %>
+  </div>
+<% } %>
+    
+<section class="section section-login">
+  <div class="valign-wrapper row login-box blue-text">
+    <div class="col card hoverable s10 pull-s1 m6 pull-m3 l10 pull-l1">
+      <form action="/login-register" method="POST" id="login-register-form">
+        <div class="card-content">
+          <span class="card-title">Login Creation:</span>
+          <div class="row">
+            <div class="input-field col s12 ">
+              <i class="small material-icons prefix">person_outline</i>
+              <input type="text" class="validate" name="username" id="username" required />
+              <label for="username" data-error="Please enter user name">User Name*</label>
+            </div>
+            <div class="input-field col s12 ">
+              <i class="small material-icons prefix">email</i>
+              <label for="email">Email Id*</label>
+              <input type="email" class="validate" name="email" id="email" />
+            </div>
+            <div class="input-field col s12 ">
+              <i class="small material-icons prefix">phone</i>
+              <label for="phoneno">Phone Number*</label>
+              <input type="text" class="validate" name="phoneno" id="phoneno"  pattern="[1-9][0-9]{9}" required/>
+            </div>
+            <div class="input-field col s12 ">
+              <i class="small material-icons prefix">view_carousel</i>
+              <select name = "role" id="role">
+                <% roles.forEach (function(role){ %>
+                  <option value = "<%= role.name %>"><%= role.name %></option>
+                <% }); %>
+              </select>
+              <label>Role </label>
+            </div>
+            <div class="input-field col s12 ">
+              <i class="small material-icons prefix">perm_identity</i>
+              <label for="userid">User ID*</label>
+              <input type="text" class="validate" name="userid" id="userid" />
+            </div>
+            <div class="input-field col s12">
+              <i class="small material-icons prefix">keyboard</i>
+              <label for="password">Password*</label>
+              <input type="password" class="validate" name="password" id="password" />
+            </div>
+            <div class="input-field col s12">
+              <i class="small material-icons prefix">keyboard</i>
+              <label for="password">Password Confirm*</label>
+              <input type="password" class="validate" name="passwordconf" id="passwordconf" />
+            </div>
+          </div>
+        </div>
+        <div class="input-field col s12">
+          <button class="btn waves-effect waves-light red accent-4 right" type="submit" name="action">Submit
+              <i class="material-icons right">send</i>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- Scripts -->
+<% include ./partials/scripts %>
+<script>
+// To close error message on clicking x
+$(".close-alert").click(function(e){
+  $(this).parent().remove();
+  e.preventDefault();
+});
+
+$().ready(function() {
+  // validate signup form on keyup and submit
+  $("#login-register-form").validate({
+    rules: {
+      username: {
+        required: true,
+        minlength: 5
+      },
+      userid:{
+        required: true,
+        minlength: 5
+      },
+      password: {
+        required: true,
+        minlength: 5
+      },
+      passwordconf: {
+        required: true,
+        minlength: 5,
+        equalTo: "#password"
+      },
+      email: {
+        required: true,
+        email: true
+      },
+      phoneno: {
+        required: true,
+        minlength: 10,
+        maxlength: 19
+      }
+    },
+    messages: {
+      username: {
+        required: "Please enter a User Name",
+        minlength: "Your username must consist of at least 5 characters"
+      },
+      userid: {
+        required: "Please enter a User Id",
+        minlength: "Your User ID must consist of at least 5 characters"
+      },
+      password: {
+        required: "Please provide a Password",
+        minlength: "Your Password must be at least 5 characters long"
+      },
+      passwordconf: {
+        required: "Please provide a Password",
+        minlength: "Your Password must be at least 5 characters long",
+        equalTo: "Please enter the same Password as above"
+      },
+      phoneno: {
+        required: "Please Provide a Phone Number",
+        minlength: "Enter 10 digit phone number",
+        maxlength: "Enter 10 digit phone number"
+      },
+      email: "Please enter a valid Email address",
+    },
+        errorElement : 'div',
+        errorPlacement: function(error, element) {
+          var placement = $(element).data('error');
+          if (placement) {
+            $(placement).append(error)
+          } else {
+            error.insertAfter(element);
+          }
+        }
+  });
+});
+
+</script>
+
+<footer>
+    <% include ./partials/footer %>
+</footer>
+
+</body>
+</html>

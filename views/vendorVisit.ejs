@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <% include ./partials/head %>
+</head>
+
+<body class="container light-blue lighten-5">
+<header>
+  <% include ./partials/header %>
+</header>
+
+<section class="section section-login">
+  <div class="valign-wrapper row login-box blue-text">
+    <div class="col card hoverable s10 pull-s1 m6 pull-m3 l10 pull-l1">
+      <form action="/vendor-rep-visit" method="POST" id="vendor-rep-register-form">
+        <div class="card-content">
+          <span class="card-title">Vendor Representative Visit:</span>
+          <div class="row">
+            <div class="input-field col s12 l5">
+                <i class="small material-icons prefix">card_membership</i>
+                <select name = "repId" id="repId">
+                    <option value="" disabled selected>Select Vendor Representative</option>
+                    <% repList.forEach (function(rep){ %>
+                        <option value = "<%= rep.repId %>" data-compname="<%= rep.repComp%>" data-compphone="<%= rep.repCompPh %>" data-compid = "<%= rep.repCompId %>" data-compadd="<%= rep.repAdd %>" data-repname ="<%= rep.repName %>" data-repphone = "<%= rep.repPhone%>"><%= rep.repName+' ('+ rep.repComp + ')' %></option>
+                    <% }); %>
+                </select>
+                <label>Vendors List:  </label>
+            </div>
+            <div class="input-field col s12 l3">
+                <span id="pCompanyName"></span>
+            </div>
+            <div class="input-field col s12 l4">
+                <span id="pCompanyAdd"></span>
+            </div>                                  
+            <div class="input-field col s12 l12">
+                <table id = "tVisitList" class="striped highlight">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Contacted</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id = "tBodyVisitList">
+                    </tbody>
+                </table>
+            </div>
+            <div class="input-field col s12 l6">
+                <i class="small material-icons prefix">card_membership</i>
+                <select name = "staffList" id="staffList">
+                    <option value="" disabled selected>Select Staff to Contact</option>
+                </select>
+                <label>Staff Lists:  </label>
+            </div>         
+            <div>
+                <input type="hidden" name="hRep_id" id="hRep_id" />
+            </div>
+            <div>
+                <input type="hidden" name="hRep_name" id="hRep_name" />
+            </div>
+            <div>
+                <input type="hidden" name="hRep_ph" id="hRep_ph" />
+            </div>
+            <div>
+                <input type="hidden" name="hRep_vendor_id" id="hRep_vendor_id" />
+            </div>            
+            <div>
+                <input type="hidden" name="hRep_vendor_name" id="hRep_vendor_name" />
+            </div>
+            <div>
+                <input type="hidden" id="hRep_vendor_add" />
+            </div>
+            <div>
+                <input type="hidden" name="hStaff_name" id="hStaff_name" />
+            </div>                            
+            <div>
+                <input type="hidden" name="hStaff_phone" id="hStaff_phone" />
+            </div>                                
+                                            
+          </div>
+        </div>
+        <div class="input-field col s12">
+          <button class="btn waves-effect waves-light red accent-4 right" type="submit" name="action">Check Permission
+              <i class="material-icons right">send</i>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- Scripts -->
+<% include ./partials/scripts %>
+<script>
+$().ready(function() {
+// Load Staff Lists on loading of the form itself
+$.ajax({
+    url: 'get-staff-list',
+    type: 'GET',
+    success: function(data){
+        //alert('Staff List from Server: '+JSON.stringify(data));
+        $.each(data, function(index, contact){
+            listItem =  '<option value="'+contact._id+'" data-staffname = "'+ contact.username +
+                            '" data-staffphone = "'+ contact.phoneno +'" >'+
+                            contact.username +' ('+contact.phoneno+')'+
+                        '</option>';
+            //alert(listItem);
+            $('#staffList').append(listItem);
+        });
+        $('select').formSelect();  //For dynamically generated select statements, this is req
+    }
+});
+
+$('#staffList').change(function(){
+    var sName = $(this).find('option:selected').attr("data-staffname");
+    $('#hStaff_name').val(sName);
+    
+    var sPhone = $(this).find('option:selected').attr("data-staffphone");
+    $('#hStaff_phone').val(sPhone);    
+});
+
+// validate signup form on keyup and submit
+    $("#vendor-rep-register-form").validate({
+    rules: {
+        vendor_id: {
+        required: true
+        },
+        name: {
+        required: true,
+        minlength: 5,
+        },
+        phoneNo: {
+        required: true,
+        minlength: 10,
+        maxlength: 11
+        },
+        photoId: {
+        required: true,
+        minlength: 5
+        }
+    },
+    messages: {
+        vendor_id: {
+        required: "Please Select a Vendor / Company Name"
+        },
+        name: {
+        required: "Please enter Name of the representative",
+        minlength: "Representative Name must consist of at least 5 characters"
+        },
+        phoneNo: {
+        required: "Please Provide a Phone Number",
+        minlength: "Enter 10 digit phone number",
+        maxlength: "Enter 10 digit phone number"
+        },
+        photoId: {
+        required: "Please enter Photo ID Number",
+        minlength: "Photo ID Number must consist of at least 5 characters"
+        }
+    },
+        errorElement : 'div',
+        errorPlacement: function(error, element) {
+            var placement = $(element).data('error');
+            if (placement) {
+            $(placement).append(error)
+            } else {
+            error.insertAfter(element);
+            }
+        }
+    });
+
+    $('#repId').change(function(){
+        var repIdSelected = $(this).find('option:selected').val()
+        var compName = $(this).find('option:selected').attr("data-compname");
+        var compAddress = $(this).find('option:selected').attr("data-compadd");
+        var compId = $(this).find('option:selected').attr("data-compid");
+        var repsName = $(this).find('option:selected').attr("data-repname");
+        var repsPhone = $(this).find('option:selected').attr("data-repphone");
+
+        $("#pCompanyName").text("Company Name: "+compName);
+        $("#pCompanyAdd").text("Company Address: "+compAddress);
+
+        $('#hRep_id').val(repIdSelected);
+        $('#hRep_name').val(repsName);
+        $('#hRep_ph').val(repsPhone);
+        $('#hRep_vendor_id').val(compId);
+        $('#hRep_vendor_name').val(compName);
+        $('#hRep_vendor_add').val(compAddress);
+
+        alert('Rep ID selected'+repIdSelected+", att: companyname: "+compName); 
+        $.ajax({
+            url: 'get-rep-details',
+            data: 'repId='+repIdSelected,
+            type: 'GET',
+            success: function(repDetails){
+                $('#tVisitList tbody').empty(); //Empties the whole tbody part
+                alert('Data from server:'+JSON.stringify(repDetails));
+                $.each(repDetails, function(index, rep){
+                    visitDt = rep.visitDate;
+                    visitDt = visitDt.replace(/T/, ' ')
+                    visitDt = visitDt.replace(/\..+/,'');
+                    rowElement = '<tr>'+
+                                    '<td>'+visitDt+'</td>'+
+                                    '<td>'+rep.staffName+'(Ph: '+ rep.staffPhoneNo+')'+'</td>'+
+                                    '<td>'+rep.visitStatus+'</td>'+
+                                '</tr>'                    
+                    $('#tVisitList > tbody:last-child').append(rowElement); //Ensures to append tbody and tr if tbody doesn't exists                    
+                });
+            }
+        })
+    });
+});
+        
+</script>
+        
+        
+
+<footer>
+    <% include ./partials/footer %>
+</footer>
+
+</body>
+</html>

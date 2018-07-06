@@ -1,0 +1,38 @@
+<!-- Navigation top menu bar.  This will go into all the pages, except login/logout -->
+  <nav class="indigo darken-2">
+    <div class="nav-wrapper">
+      <a href="#!" class="brand-logo right">Logo</a>
+      <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+      <ul class="left hide-on-med-and-down">
+        <% if (user.role == 'admin'){ %>
+          <li><a href="/login-register">Register User</a></li>
+          <li><a href="/reports">Reports</a></li>
+        <% } else if (user.role == 'security') { %>
+          <li><a href="/vendor-register">Register Vendor (old)</a></li>
+          <li><a href="/vendor-reg">Register Vendor</a></li>
+          <li><a href="/vendor-rep-reg">Register Vendor Persons</a></li>
+          <li><a href="/vendor-rep-visit">>Vendor Visit</a></li>
+          <li><a href="/vendor-check">Vendor Check</a></li>
+        <% } else if (user.role == 'staff') { %>
+          <li><a href="/approve-visit">Approve Vendor Visit</a></li>        
+        <% } %>
+        <li><a href="/logout">Logout</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <ul class="sidenav" id="mobile-demo">
+      <% if (user.role == 'admin'){ %>
+        <li><a href="/login-register">Register User</a></li>
+        <li><a href="/reports">Reports</a></li>
+      <% } else if (user.role == 'security') { %>
+        <li><a href="/vendor-register">Register Vendor (old)</a></li>
+        <li><a href="/vendor-reg">Register Vendor</a></li>
+        <li><a href="/vendor-rep-reg">Register Vendor Persons</a></li>
+        <li><a href="/vendor-rep-visit">>Vendor Visit</a></li>
+        <li><a href="/vendor-check">Vendor Check</a></li>
+      <% } else if (user.role == 'staff') { %>
+        <li><a href="/approve-visit">Approve Vendor Visit</a></li>        
+      <% } %>
+      <li><a href="/logout">Logout</a></li>
+</ul>

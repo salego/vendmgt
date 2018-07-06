@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <% include ./partials/head %>
+</head>
+
+<body class="container light-blue lighten-5">
+<header>
+  <% include ./partials/header %>
+</header>
+
+<section class="section section-login">
+  <div class="valign-wrapper row login-box blue-text">
+    <div class="col card hoverable s10 pull-s1 m6 pull-m3 l4 pull-l4">
+      <form action="/vendor-rep-reg" method="POST" id="vendor-rep-register-form">
+        <div class="card-content">
+          <span class="card-title">Vendor Representative Registration:</span>
+          <div class="row">
+            <div class="input-field col s12 ">
+                <i class="small material-icons prefix">card_membership</i>
+                <select name = "vendor_id" id="vendor_id">
+                    <% vendorList.forEach (function(vendor){ %>
+                    <option value = "<%= vendor._id %>"><%= vendor.company %></option>
+                    <% }); %>
+                </select>
+                <label>Vendors List:  </label>
+            </div>
+            <div class="input-field col s12 ">
+                <i class="small material-icons prefix">person_outline</i>
+                <input type="text" class="validate" name="name" id="name" required />
+                <label for="name" data-error="Please enter Vendor name">Vendor Representative Name*</label>
+            </div>
+            <div class="input-field col s12 ">
+                <i class="small material-icons prefix">phone</i>
+                <label for="phoneNo">Representative Phone Number*</label>
+                <input type="text" class="validate" name="phoneNo" id="phoneNo"  pattern="[1-9][0-9]{9}" required/>
+            </div>
+            <div class="input-field col s12 ">
+                <i class="small material-icons prefix">card_membership</i>
+                <select name = "photoIdType" id="photoIdType">
+                    <% types.forEach (function(type){ %>
+                    <option value = "<%= type.idType %>"><%= type.idType %></option>
+                    <% }); %>
+                </select>
+                <label>Role </label>
+            </div>
+            <div class="input-field col s12 ">
+                <i class="small material-icons prefix">portrait</i>
+                <input type="text" class="validate" name="photoId" id="photoId" required />
+                <label for="photoId" data-error="Please enter photoId">Phot Id Number*</label>
+            </div>            
+          </div>
+        </div>
+        <div class="input-field col s12">
+          <button class="btn waves-effect waves-light red accent-4 right" type="submit" name="action">Create Representative
+              <i class="material-icons right">send</i>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- Scripts -->
+<% include ./partials/scripts %>
+<script>
+$().ready(function() {
+    // validate signup form on keyup and submit
+    $("#vendor-rep-register-form").validate({
+    rules: {
+        vendor_id: {
+        required: true
+        },
+        name: {
+        required: true,
+        minlength: 5,
+        },
+        phoneNo: {
+        required: true,
+        minlength: 10,
+        maxlength: 11
+        },
+        photoIdType: {
+            required: true
+        },
+        photoId: {
+        required: true,
+        minlength: 5
+        }
+    },
+    messages: {
+        vendor_id: {
+        required: "Please Select a Vendor / Company Name"
+        },
+        name: {
+        required: "Please enter Name of the representative",
+        minlength: "Representative Name must consist of at least 5 characters"
+        },
+        phoneNo: {
+        required: "Please Provide a Phone Number",
+        minlength: "Enter 10 digit phone number",
+        maxlength: "Enter 10 digit phone number"
+        },
+        photoIdType: {
+        required: "Please select a Photo ID type"
+        },
+        photoId: {
+        required: "Please enter Photo ID Number",
+        minlength: "Photo ID Number must consist of at least 5 characters"
+        }
+    },
+        errorElement : 'div',
+        errorPlacement: function(error, element) {
+            var placement = $(element).data('error');
+            if (placement) {
+            $(placement).append(error)
+            } else {
+            error.insertAfter(element);
+            }
+        }
+    });
+});
+        
+</script>
+        
+        
+
+<footer>
+    <% include ./partials/footer %>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <% include ./partials/head %>
+  <script type="text/javascript">
+    function setup(){
+        // Grab elements, create settings, etc.
+        var video = document.getElementById('video');
+        // Get access to the camera!
+        if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+            // Not adding `{ audio: true }` since we only want video now
+            navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream) {
+                video.src = window.URL.createObjectURL(stream);
+                video.play();
+            });
+        }
+    }
+    </script>    
+</head>
+<body class="container light-blue lighten-5"  onload="setup()"> 
+    <header>
+    <% include ./partials/header %>
+    </header>
+
+    <form action="vendor-check" method="post" id="snapForm">
+        <video id="video" width="640" height="480" autoplay="autoplay"></video>
+        <input type="button" value="snap photo" id="snap">
+        <canvas id="canvas" width="640" height="480"></canvas>
+        <input type="hidden" id="img" name="img">
+        <input type="submit" value="submit">
+    </form>
+            
+    <script type="text/javascript">
+        document.getElementById("snap").addEventListener("click", function() {
+            var canvas = document.getElementById('canvas');
+            var context = canvas.getContext('2d');
+            var video = document.getElementById('video');
+            context.drawImage(video, 0, 0, 640, 480);
+            img.value = canvas.toDataURL();
+        });
+    </script>
+    <!-- Scripts -->
+    <% include ./partials/scripts %>
+
+</body>
+</html>

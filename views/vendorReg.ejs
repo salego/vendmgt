@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <% include ./partials/head %>
+</head>
+
+<body class="container light-blue lighten-5">
+<header>
+  <% include ./partials/header %>
+</header>
+
+<section class="section section-login">
+  <div class="valign-wrapper row login-box blue-text">
+    <div class="col card hoverable s10 pull-s1 m6 pull-m3 l10 pull-l1">
+      <form action="/vendor-reg" method="POST" id="vendor-register-form">
+        <div class="card-content">
+          <span class="card-title">Vendor Registration:</span>
+          <div class="row">
+            <div class="input-field col s12 ">
+              <i class="small material-icons prefix">home</i>
+              <input type="text" class="validate" name="company" id="company" required />
+              <label for="company" data-error="Please enter Vendor Company name">Vendor Company Name*</label>
+            </div>
+            <div class="input-field col s12 ">
+              <i class="small material-icons prefix">phone</i>
+              <label for="phoneNo">Company Phone Number*</label>
+              <input type="text" class="validate" name="phoneNo" id="phoneNo"  pattern="[1-9][0-9]{9}" required/>
+            </div>
+            <div class="input-field col s12 ">
+              <i class="small material-icons prefix">contacts</i>
+              <input type="text" class="validate" name="address" id="address" required />
+              <label for="address" data-error="Please enter Vendor address">Company Address*</label>
+            </div>
+          </div>
+        </div>
+        <div class="input-field col s12">
+          <button class="btn waves-effect waves-light red accent-4 right" type="submit" name="action">Submit
+              <i class="material-icons right">send</i>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- Scripts -->
+<% include ./partials/scripts %>
+<script>
+
+$().ready(function() {
+  // validate signup form on keyup and submit
+  $("#vendor-register-form").validate({
+    rules: {
+      company:{
+        required: true,
+        minlength: 5
+      },
+      phoneNo: {
+        required: true,
+        minlength: 10,
+        maxlength: 11
+      },
+      address: {
+        required: true,
+        minlength: 5,
+      }
+    },
+    messages: {
+      company: {
+        required: "Please enter Name of the company",
+        minlength: "Company Name must consist of at least 5 characters"
+      },
+      phoneNo: {
+        required: "Please Provide a Phone Number",
+        minlength: "Enter 10 digit phone number",
+        maxlength: "Enter 10 digit phone number"
+      },
+      address: {
+        required: "Please enter Company Address",
+        minlength: "Company Address must consist of at least 5 characters"
+      }
+    },
+        errorElement : 'div',
+        errorPlacement: function(error, element) {
+          var placement = $(element).data('error');
+          if (placement) {
+            $(placement).append(error)
+          } else {
+            error.insertAfter(element);
+          }
+        }
+  });
+});
+
+</script>
+
+<footer>
+    <% include ./partials/footer %>
+</footer>
+
+</body>
+</html>

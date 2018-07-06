@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <% include ./partials/head %>
+</head>
+
+<body class="container light-blue lighten-5">
+
+<!-- Error messages from flash
+    uses script snippet also for closing this strip -->
+<% if (showErrors)  { %>
+  <div class="alert alert-danger" role="alert">
+      <button type="button" class="close-alert">×</button>
+          <% errors.forEach (function(error){ %>
+              <p><%= error %></p>
+          <% }); %>
+  </div>
+<% } %>
+
+<section class="section section-login">
+  <div class="valign-wrapper row login-box blue-text">
+    <div class="col card hoverable s10 pull-s1 m6 pull-m3 l4 pull-l4">
+      <form action="/login" method="POST" id="login-form">
+        <div class="card-content">
+          <span class="card-title">Login:</span>
+          <div class="row">
+            <div class="input-field col s12 ">
+              <i class="small material-icons prefix">perm_identity</i>
+              <label for="userid">User ID*</label>
+              <input type="text" class="validate" name="userid" id="userid" />
+            </div>
+            <div class="input-field col s12">
+              <i class="small material-icons prefix">keyboard</i>
+              <label for="password">Password*</label>
+              <input type="password" class="validate" name="password" id="password" />
+            </div>
+          </div>
+        </div>
+        <div class="input-field col s12">
+          <button class="btn waves-effect waves-light green accent-4 right" type="submit" name="action">Login
+              <i class="material-icons right">send</i>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- Scripts -->
+<% include ./partials/scripts %>
+<script>
+
+// To close error message on clicking x
+$(".close-alert").click(function(e){
+  $(this).parent().remove();
+  e.preventDefault();
+});
+
+$().ready(function() {
+  // validate signup form on keyup and submit
+  $("#login-form").validate({
+    rules: {
+      userid:{
+        required: true,
+        minlength: 5
+      },
+      password: {
+        required: true,
+        minlength: 5
+      }
+    },
+    messages: {
+      userid: {
+        required: "Please enter a User Id",
+        minlength: "Your User ID must consist of at least 5 characters"
+      }
+    },
+        errorElement : 'div',
+        errorPlacement: function(error, element) {
+          var placement = $(element).data('error');
+          if (placement) {
+            $(placement).append(error)
+          } else {
+            error.insertAfter(element);
+          }
+        }
+  });
+});
+
+</script>
+
+<footer>
+    <% include ./partials/footer %>
+</footer>
+
+</body>
+</html>

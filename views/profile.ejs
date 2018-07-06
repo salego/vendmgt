@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <% include ./partials/head %>
+</head>
+
+<body class="container light-blue lighten-5">
+<header>
+  <% include ./partials/header %>
+</header>
+
+<section class="section section-login">
+  <div class="valign-wrapper row login-box blue-text">
+    <div class="col card hoverable s10 pull-s1 m6 pull-m3 l4 pull-l4">
+        <h6>Vendor Management System <br> 
+          <p> User: 
+            <%= user.username %>
+          </p>
+        </h6>
+    </div>
+  </div>
+</section>
+
+<!-- Scripts -->
+<% include ./partials/scripts %>
+
+<footer>
+    <% include ./partials/footer %>
+</footer>
+
+</body>
+</html>

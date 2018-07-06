@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <% include ./partials/head %>
+</head>
+
+<body class="container">
+
+<section class="section section-login">
+  <div class="valign-wrapper row login-box">
+          <div class="col card hoverable s10 pull-s1 m6 pull-m3 l4 pull-l4">
+            <form action="/api/login" method="POST">
+              <div class="card-content">
+                <span class="card-title">Enter login details</span>
+                <div class="row">
+
+                  <div class="input-field col s12 ">
+                    <label for="text">User ID</label>
+                    <input type="text" class="validate" name="uid" id="userid" />
+                  </div>
+                  <div class="input-field col s12">
+                    <label for="password">Password </label>
+                    <input type="password" class="validate" name="pwd" id="password" />
+                  </div>
+                </div>
+              </div>
+              <div class="card-action right-align">
+                <input type="reset" id="reset" class="btn-flat grey-text waves-effect">
+                <input type="submit" class="btn teal waves-effect waves-light" value="Login">
+              </div>
+            </form>
+          </div>
+        </div>
+</section>
+
+<!-- Scripts -->
+<% include ./partials/scripts %>
+
+<footer>
+    <% include ./partials/footer %>
+</footer>
+
+</body>
+</html>
