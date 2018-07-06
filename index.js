@@ -31,7 +31,7 @@ if (mongoURL == null && process.env.DATABASE_SERVICE_NAME) {
 
   }
 }
-console.log('suneel: just before calling...mongoURL, mongoURL);
+console.log('suneel: just before calling...mongoURL', mongoURL);
             
 var initDb = function(callback) {
   if (mongoURL == null) mongoURL = 'mongodb://localhost/vendormgt';
