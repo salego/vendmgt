@@ -13,6 +13,7 @@
     "bcrypt": "^2.0.1",
     "chai": "^3.5.0",
     "chai-http": "^2.0.1",
+    "mongodb": "^2.1.16",
     "object-assign":"4.1.0",
     "body-parser": "^1.18.3",
     "ejs": "^2.6.1",
