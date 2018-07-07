@@ -11,6 +11,12 @@ const passport = require("passport");
 const fs = require('fs');
 const async = require('async'); // DB calls are async
 
+router.get('/', function(req,res,next){
+  res.render('login',  {user: req.user, showErrors: false});
+});
+router.get('/pagecount', function(req,res,next){
+  res.render('login',  {user: req.user, showErrors: false});
+});
 router.get('/login', function(req,res,next){
   const flashMessages = res.locals.getMessages();
   console.log('Flash-Message: ',flashMessages);
