@@ -1,4 +1,4 @@
-var server   = require('../index')
+var server   = require('../index');
 
 
 
