@@ -11,6 +11,9 @@
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^2.0.1",
+    "chai": "^3.5.0",
+    "chai-http": "^2.0.1",
+    "object-assign":"4.1.0",
     "body-parser": "^1.18.3",
     "ejs": "^2.6.1",
     "express": "^4.16.3",
