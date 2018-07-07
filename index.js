@@ -12,6 +12,7 @@ var port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 4000,
     mongoURL = process.env.OPENSHIFT_MONGODB_DB_URL || process.env.MONGO_URL,
     mongoURLLabel = "";
 console.log('suneel: env variables mongoURL',mongoURL);
+console.log('suneel: env db service name: ',process.env.DATABASE_SERVICE_NAME);
 if (mongoURL == null && process.env.DATABASE_SERVICE_NAME) {
   var mongoServiceName = process.env.DATABASE_SERVICE_NAME.toUpperCase(),
       mongoHost = process.env[mongoServiceName + '_SERVICE_HOST'],
@@ -19,6 +20,8 @@ if (mongoURL == null && process.env.DATABASE_SERVICE_NAME) {
       mongoDatabase = process.env[mongoServiceName + '_DATABASE'],
       mongoPassword = process.env[mongoServiceName + '_PASSWORD']
       mongoUser = process.env[mongoServiceName + '_USER'];
+    
+    console.log('suneel: Service host details :',process.env[mongoServiceName + '_SERVICE_HOST']);
 
   if (mongoHost && mongoPort && mongoDatabase) {
     mongoURLLabel = mongoURL = 'mongodb://';
