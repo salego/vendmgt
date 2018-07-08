@@ -37,7 +37,11 @@ if (mongoURL == null && process.env.DATABASE_SERVICE_NAME) {
 console.log('suneel: just before calling...mongoURL', mongoURL);
             
 var initDb = function(callback) {
-  if (mongoURL == null) mongoURL = 'mongodb://localhost/vendormgt';
+  if (mongoURL == null) {
+    console.log('suneel: Finally mongoURL is still null...setting it by string');
+    mongoURL='mongodb://admin:admin123@mongodb:27017/sampledb'
+    console.log('suneel: mongoURL set to: ', mongoURL);
+  }
 
   //mongoose.connect('mongodb://localhost/ninjago');
   mongoose.connect(mongoURL);  //connect to mongo db using mongoose DB: ninjago
