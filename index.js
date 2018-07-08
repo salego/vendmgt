@@ -44,7 +44,9 @@ var initDb = function(callback) {
   }
 
   //mongoose.connect('mongodb://localhost/ninjago');
-  mongoose.connect(mongoURL);  //connect to mongo db using mongoose DB: ninjago
+  mongoose.connect(mongoURL, function(err){
+      console.log('suneel: error connecting to mongoose db', err);
+  });  //connect to mongo db using mongoose DB: ninjago
   mongoose.Promise = global.Promise;
 
   /*mongodb.connect(mongoURL, function(err, conn) {
