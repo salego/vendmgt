@@ -11,7 +11,7 @@ console.log('Server found? : ',reqServer);
 
 describe('Basic routes tests', function() {
     it('GET to / should return 200', function(done){
-        chai.request(reqServer)
+        chai.request('http://0.0.0.0:3030')
         .get('/')
         .end(function(err, res) {
             res.should.have.status(200);
