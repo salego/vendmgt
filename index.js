@@ -39,7 +39,7 @@ console.log('suneel: just before calling...mongoURL', mongoURL);
 var initDb = function(callback) {
   if (mongoURL == null) {
     console.log('suneel: Finally mongoURL is still null...setting it by string');
-    mongoURL='mongodb://admin:J8IwNWnykMknV04t@mongodb:27017/sampledb'
+    mongoURL='mongodb://admin:J8IwNWnykMknV04t@127.0.0.1:27017/sampledb'
     //console.log('suneel: mongoURL set to: ', mongoURL);
   }
 
