@@ -40,28 +40,14 @@ var initDb = function(callback) {
   if (mongoURL == null) {
     console.log('suneel: Finally mongoURL is still null...setting it by string');
     mongoURL='mongodb://admin:admin123@mongodb:27017/sampledb'
-    console.log('suneel: mongoURL set to: ', mongoURL);
+    //console.log('suneel: mongoURL set to: ', mongoURL);
   }
 
   //mongoose.connect('mongodb://localhost/ninjago');
-  mongoose.connect(mongoURL, function(err){
-      console.log('suneel: error connecting to mongoose db', err);
-  });  //connect to mongo db using mongoose DB: ninjago
+  mongoose.connect(mongoURL, { useNewUrlParser: true });  //connect to mongo db using mongoose DB: ninjago
   mongoose.Promise = global.Promise;
 
-  /*mongodb.connect(mongoURL, function(err, conn) {
-    if (err) {
-      callback(err);
-      return;
-    } 
-
-    db = conn;
-    dbDetails.databaseName = db.databaseName;
-    dbDetails.url = mongoURLLabel;
-    dbDetails.type = 'MongoDB';
-    */
-
-    console.log('Connected to MongoDB at: %s', mongoURL);
+  console.log('suneel: Connected to MongoDB at: %s', mongoURL);
 };
 initDb();
 
